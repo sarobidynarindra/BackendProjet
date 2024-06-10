@@ -28,7 +28,14 @@ const login = async (req, res) => {
         expiresIn: 86400
     });
     // Authentification réussie
-    res.status(200).send({ auth: true, token: token });
+    res.status(200).send({ auth: true, token: token ,client: {
+      id: client.id,
+      nom: client.nom,
+      prenom: client.prenom,
+      email: client.email,
+      nomUtilisateur: client.nomUtilisateur,
+      role: client.role
+    }});
     //res.status(200).json({ message: 'Login successful' });
   } catch (error) {
     console.error(error);

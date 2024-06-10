@@ -262,7 +262,8 @@ create table clients_contributeurs_guides(
 	updated_at timestamp default CURRENT_TIMESTAMP
 );
 
-insert into clients_contributeurs_guides values(default, 1, 1, default, default);
+
+
 
 create table payment_history(
 	id serial primary key unique,
@@ -462,3 +463,9 @@ ADD COLUMN intro text;
 
 ALTER TABLE clients_contributeurs_guides
 ADD COLUMN archived boolean not null default false;
+
+/*modification mobile */
+ALTER TABLE clients_contributeurs_guides
+ADD COLUMN cle_parcours VARCHAR(255);
+
+insert into clients_contributeurs_guides values(default, 1,1,default,default,'user1');
