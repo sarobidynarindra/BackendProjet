@@ -5,6 +5,7 @@ let app = express();
 
 
 const authRoutes = require('./routes/authRoutes');
+const formationClientRoutes = require('./routes/formationClientRoutes');
 let bodyParser = require('body-parser');
 
 const multer = require('multer');
@@ -45,6 +46,7 @@ app.use(bodyParser.json());
 const prefix = '/api';
 // Ajouter les routes
 app.use(prefix + '/auth', authRoutes);
+app.use(prefix + '/getAllFormation', formationClientRoutes);
 
 // Obligatoire si déploiement dans le cloud !
 let port = process.env.PORT || 3000;
