@@ -469,3 +469,71 @@ ALTER TABLE clients_contributeurs_guides
 ADD COLUMN cle_parcours VARCHAR(255);
 
 insert into clients_contributeurs_guides values(default, 1,1,default,default,'user1');
+
+
+create table TypesExercices(
+	id serial primary key unique,
+	type VARCHAR(100) not null unique,
+	created_at timestamp default CURRENT_TIMESTAMP,
+	updated_at timestamp default CURRENT_TIMESTAMP
+);
+insert into TypesExercices values(default,'QCM',default,default);
+insert into TypesExercices values(default,'lectures de documents',default,default);
+insert into TypesExercices values(default,'Questions fermées',default,default);
+insert into TypesExercices values(default,'actions à realiser',default,default);
+
+create table Exercices(
+	id serial primary key unique,
+	id_contributeurs_guides int not null,
+	nomExercice varchar(150) not null,
+	descriptionExo text not null,
+	id_type int not null,
+	created_at timestamp default CURRENT_TIMESTAMP,
+	updated_at timestamp default CURRENT_TIMESTAMP,
+	CONSTRAINT fk_type FOREIGN KEY (id_type) REFERENCES TypesExercices (id),
+	CONSTRAINT fk_contributeursGuides FOREIGN KEY (id_contributeurs_guides) REFERENCES contributeurs_guides(id)
+);
+
+insert into Exercices values(default,1,'Exercice sur les bilan','Quelque chose:',1,default,default);
+insert into Exercices values(default,1,'Exercice mathematiques','ce sujet sert à resoudre equation',2,default,default);
+
+create table questionExercice(
+	id serial primary key unique,
+	id_exercice int not null,
+	question text null,
+	created_at timestamp default CURRENT_TIMESTAMP,
+	updated_at timestamp default CURRENT_TIMESTAMP,
+	CONSTRAINT fk_questionexercice FOREIGN KEY (id_exercice) REFERENCES Exercices (id)
+);
+insert into questionExercice values(default,1,'de quoi suis-je le moins fier?',default,default);
+insert into questionExercice values(default,1,'de quoi suis-je le plus fier?',default,default);
+insert into questionExercice values(default,1,'quels sont les changements que je me suis fixe?',default,default);
+insert into questionExercice values(default,1,'quels est ma couleur preféré?',default,default);
+
+create table Reponsesexercice(
+	id serial primary key unique,
+	id_exercices int not null,
+	id_client int,
+	response text,
+	created_at timestamp default CURRENT_TIMESTAMP,	
+	updated_at timestamp default CURRENT_TIMESTAMP,
+	CONSTRAINT fk_exercice FOREIGN KEY (id_exercices) REFERENCES Exercices (id),
+	CONSTRAINT fk_client FOREIGN KEY (id_client) REFERENCES Clients (id)
+);
+
+create table Frequence(
+	id serial primary key unique,
+	nomfrequence VARCHAR(100) not null
+);
+insert into frequence values(default,'quotidienne');
+insert into frequence values(default,'hebdomadaire');
+insert into frequence values(default,'mensuelle');
+
+create table planification(
+	id serial primary key unique,
+	id_exercices int not null,
+	id_frequence int not null,
+	dateEtHeure timestamp not null,
+	CONSTRAINT fk_exercice_planification FOREIGN KEY (id_exercices) REFERENCES Exercices (id),
+    CONSTRAINT fk_frequence FOREIGN KEY (id_frequence) REFERENCES Frequence (id)
+);
