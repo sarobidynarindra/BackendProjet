@@ -7,6 +7,7 @@ let app = express();
 const authRoutes = require('./routes/authRoutes');
 const formationClientRoutes = require('./routes/formationClientRoutes');
 const exercices = require('./routes/ExercicesRoutes');
+const planification = require('./routes/PlanificationRoutes');
 let bodyParser = require('body-parser');
 
 const multer = require('multer');
@@ -49,6 +50,7 @@ const prefix = '/api';
 app.use(prefix + '/auth', authRoutes);
 app.use(prefix + '/getAllFormation', formationClientRoutes);
 app.use(prefix + '/Exercices', exercices);
+app.use(prefix + '/Planification', planification);
 
 // Obligatoire si déploiement dans le cloud !
 let port = process.env.PORT || 3000;
