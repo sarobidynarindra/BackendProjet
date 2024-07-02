@@ -18,18 +18,23 @@ const Planification = sequelize.define('planification', {
       key: 'id'
     }
   },
-  id_frequence: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: Frequence,
-      key: 'id'
-    }
+  jours:{
+    type: DataTypes.STRING,
+    allowNull:false
   },
-  dateetheure: {
+  nombrefois:{
+    type: DataTypes.STRING,
+    allowNull:false
+  },
+  heure:{
+    type: DataTypes.TIME,
+    allowNull:false
+  },
+  dateplanification: {
     type: DataTypes.DATE,
     allowNull: false
-  }
+  },
+  
 },
 {
     tableName: 'planification',
@@ -37,8 +42,6 @@ const Planification = sequelize.define('planification', {
 });
 
 Exercices.hasMany(Planification, { foreignKey: 'id_exercices' });
-Frequence.hasMany(Planification, { foreignKey: 'id_frequence' });
 Planification.belongsTo(Exercices, { foreignKey: 'id_exercices' });
-Planification.belongsTo(Frequence, { foreignKey: 'id_frequence' });
 
 module.exports = Planification;

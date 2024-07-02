@@ -532,8 +532,9 @@ insert into frequence values(default,'mensuelle');
 create table planification(
 	id serial primary key unique,
 	id_exercices int not null,
-	id_frequence int not null,
-	dateEtHeure timestamp not null,
-	CONSTRAINT fk_exercice_planification FOREIGN KEY (id_exercices) REFERENCES Exercices (id),
-    CONSTRAINT fk_frequence FOREIGN KEY (id_frequence) REFERENCES Frequence (id)
+	jours varchar(100) not null,
+	nombrefois varchar(200) not null,
+	heure time,
+	dateplanification Date not null,
+	CONSTRAINT fk_exercice_planification FOREIGN KEY (id_exercices) REFERENCES Exercices (id)
 );
