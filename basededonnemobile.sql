@@ -464,6 +464,9 @@ ADD COLUMN intro text;
 ALTER TABLE clients_contributeurs_guides
 ADD COLUMN archived boolean not null default false;
 
+ALTER TABLE contributeurs_guides
+ADD COLUMN code VARCHAR(250);
+
 /*modification mobile */
 ALTER TABLE clients_contributeurs_guides
 ADD COLUMN cle_parcours VARCHAR(255);
@@ -521,14 +524,6 @@ create table Reponsesexercice(
 	CONSTRAINT fk_client FOREIGN KEY (id_client) REFERENCES Clients (id)
 );
 
-create table Frequence(
-	id serial primary key unique,
-	nomfrequence VARCHAR(100) not null
-);
-insert into frequence values(default,'quotidienne');
-insert into frequence values(default,'hebdomadaire');
-insert into frequence values(default,'mensuelle');
-
 create table planification(
 	id serial primary key unique,
 	id_exercices int not null,
@@ -538,3 +533,6 @@ create table planification(
 	dateplanification Date not null,
 	CONSTRAINT fk_exercice_planification FOREIGN KEY (id_exercices) REFERENCES Exercices (id)
 );
+
+
+npx react-native start --reset -cache
