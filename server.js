@@ -53,7 +53,7 @@ app.use(prefix + '/Exercices', exercices);
 app.use(prefix + '/Planification', planification);
 
 // Obligatoire si déploiement dans le cloud !
-let port = process.env.PORT || 3000;
+let port = process.env.PORT || 8010;
 app.listen(port, "0.0.0.0");
 console.log('Serveur démarré sur http://localhost:' + port);
 
