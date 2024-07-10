@@ -527,12 +527,18 @@ create table Reponsesexercice(
 create table planification(
 	id serial primary key unique,
 	id_exercices int not null,
-	jours varchar(100) not null,
 	nombrefois varchar(200) not null,
 	heure time,
 	dateplanification Date not null,
 	CONSTRAINT fk_exercice_planification FOREIGN KEY (id_exercices) REFERENCES Exercices (id)
 );
-
-
+CREATE TABLE OptionsReponse (
+    id serial PRIMARY KEY,
+    id_question int NOT NULL,
+    option_text text NOT NULL,
+    is_correct boolean DEFAULT false,
+    created_at timestamp default CURRENT_TIMESTAMP,
+    updated_at timestamp default CURRENT_TIMESTAMP,
+    CONSTRAINT fk_question_option FOREIGN KEY (id_question) REFERENCES questionExercice (id)
+);
 npx react-native start --reset -cache

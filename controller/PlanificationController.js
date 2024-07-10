@@ -13,14 +13,12 @@ const addPlanifications = async (req, res) => {
       const newPlanifications = [];
   
       for (const plan of planifications) {
-        const { id_exercices, jours, nombrefois, heure, dateplanification } = plan;
+        const { id_exercices,nombrefois, heure, dateplanification } = plan;
   
         if (id_exercices == null) {
           return res.status(400).json({ error: 'Missing id_exercices in one of the planifications' });
         }
-        if (!jours) {
-          return res.status(400).json({ error: 'Missing jours in one of the planifications' });
-        }
+        
         if (!nombrefois) {
           return res.status(400).json({ error: 'Missing nombrefois in one of the planifications' });
         }
@@ -33,7 +31,6 @@ const addPlanifications = async (req, res) => {
   
         const newPlanification = await Planification.create({
           id_exercices,
-          jours,
           nombrefois,
           heure,
           dateplanification   
@@ -47,7 +44,16 @@ const addPlanifications = async (req, res) => {
       return res.status(500).json({ error: error.message });
     }
   };
-
+ 
+  const getPlannification = async (req, res) => {
+    try {
+        const planifications = await Planification.findAll();
+        res.status(200).json(planifications);
+    } catch (err) {
+        res.status(500).send({ message: err.message });
+    }
+};
 module.exports = {
   addPlanifications,
+  getPlannification,
 };

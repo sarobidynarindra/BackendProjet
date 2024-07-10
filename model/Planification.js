@@ -18,10 +18,6 @@ const Planification = sequelize.define('planification', {
       key: 'id'
     }
   },
-  jours:{
-    type: DataTypes.STRING,
-    allowNull:false
-  },
   nombrefois:{
     type: DataTypes.STRING,
     allowNull:false
