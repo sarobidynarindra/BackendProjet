@@ -473,7 +473,7 @@ ADD COLUMN cle_parcours VARCHAR(255);
 
 insert into clients_contributeurs_guides values(default, 1,1,default,default,'user1');
 
-
+drop table IF EXISTS TypesExercices CASCADE;
 create table TypesExercices(
 	id serial primary key unique,
 	type VARCHAR(100) not null unique,
@@ -485,6 +485,7 @@ insert into TypesExercices values(default,'lectures de documents',default,defaul
 insert into TypesExercices values(default,'Questions fermées',default,default);
 insert into TypesExercices values(default,'actions à realiser',default,default);
 
+drop table IF EXISTS Exercices CASCADE;
 create table Exercices(
 	id serial primary key unique,
 	id_contributeurs_guides int not null,
@@ -500,6 +501,7 @@ create table Exercices(
 insert into Exercices values(default,1,'Exercice sur les bilan','Quelque chose:',1,default,default);
 insert into Exercices values(default,1,'Exercice mathematiques','ce sujet sert à resoudre equation',2,default,default);
 
+drop table IF EXISTS questionExercice CASCADE;
 create table questionExercice(
 	id serial primary key unique,
 	id_exercice int not null,
@@ -508,10 +510,35 @@ create table questionExercice(
 	updated_at timestamp default CURRENT_TIMESTAMP,
 	CONSTRAINT fk_questionexercice FOREIGN KEY (id_exercice) REFERENCES Exercices (id)
 );
-insert into questionExercice values(default,1,'de quoi suis-je le moins fier?',default,default);
-insert into questionExercice values(default,1,'de quoi suis-je le plus fier?',default,default);
-insert into questionExercice values(default,1,'quels sont les changements que je me suis fixe?',default,default);
-insert into questionExercice values(default,1,'quels est ma couleur preféré?',default,default);
+insert into questionExercice values(default,2,'de quoi suis-je le moins fier?',default,default);
+insert into questionExercice values(default,2,'de quoi suis-je le plus fier?',default,default);
+insert into questionExercice values(default,2,'quels sont les changements que je me suis fixe?',default,default);
+insert into questionExercice values(default,2,'quels est ma couleur preféré?',default,default);
+
+insert into questionExercice values(default,1,'Quelle est la capitale de France?',default,default);
+insert into questionExercice values(default,1,'Quelle est le type exo sur le bilan?',default,default);
+insert into questionExercice values(default,1,'Quelle est la couleur du pomme?',default,default);
+
+drop table IF EXISTS OptionsReponse CASCADE;
+CREATE TABLE OptionsReponse (
+    id serial PRIMARY KEY,
+    id_question int NOT NULL,
+    option_text text NOT NULL,
+    is_correct boolean DEFAULT false,
+    created_at timestamp default CURRENT_TIMESTAMP,
+    updated_at timestamp default CURRENT_TIMESTAMP,
+    CONSTRAINT fk_question_option FOREIGN KEY (id_question) REFERENCES questionExercice (id)
+);
+insert into OptionsReponse values(default,5,'Paris',false,default,default);
+insert into OptionsReponse values(default,5,'Belgique',false,default,default);
+insert into OptionsReponse values(default,5,'Londres',false,default,default);
+insert into OptionsReponse values(default,5,'Madrid',false,default,default);
+insert into OptionsReponse values(default,6,'QCM',false,default,default);
+insert into OptionsReponse values(default,6,'exo2',false,default,default);
+insert into OptionsReponse values(default,6,'exo3',false,default,default);
+insert into OptionsReponse values(default,7,'vert',false,default,default);
+insert into OptionsReponse values(default,7,'Rouge',false,default,default);
+insert into OptionsReponse values(default,7,'blanc',false,default,default);
 
 create table Reponsesexercice(
 	id serial primary key unique,
@@ -523,7 +550,6 @@ create table Reponsesexercice(
 	CONSTRAINT fk_exercice FOREIGN KEY (id_exercices) REFERENCES Exercices (id),
 	CONSTRAINT fk_client FOREIGN KEY (id_client) REFERENCES Clients (id)
 );
-
 create table planification(
 	id serial primary key unique,
 	id_exercices int not null,
@@ -532,13 +558,5 @@ create table planification(
 	dateplanification Date not null,
 	CONSTRAINT fk_exercice_planification FOREIGN KEY (id_exercices) REFERENCES Exercices (id)
 );
-CREATE TABLE OptionsReponse (
-    id serial PRIMARY KEY,
-    id_question int NOT NULL,
-    option_text text NOT NULL,
-    is_correct boolean DEFAULT false,
-    created_at timestamp default CURRENT_TIMESTAMP,
-    updated_at timestamp default CURRENT_TIMESTAMP,
-    CONSTRAINT fk_question_option FOREIGN KEY (id_question) REFERENCES questionExercice (id)
-);
+
 npx react-native start --reset -cache
