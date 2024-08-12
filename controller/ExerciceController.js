@@ -103,7 +103,39 @@ const getAllExerciceParFormation = async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+const createExercice = async (req, res) => {
+    const { id_contributeurs_guides, nomexercice, descriptionexo, id_type } = req.body;
+
+    if (!id_contributeurs_guides || !nomexercice ) {
+        return res.status(400).json({ message: 'Missing required fields' });
+    }
+
+    try {
+        const contributeurs = await ContributeursGuides.findByPk(id_contributeurs_guides);
+        if (!contributeurs) {
+            return res.status(404).json({ message: 'contributeur guide not found' });
+        }
+
+        const type = await TypesExercices.findByPk(id_type);
+        if (!type) {
+            return res.status(404).json({ message: 'Type not found' });
+        }
+        
+        const exercice = await Exercices.create({
+            id_contributeurs_guides,
+            nomexercice,
+            descriptionexo,
+            id_type,
+        });
+
+        
+        res.status(201).json(exercice);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
 module.exports = {
     getAllExerciceParFormation,
     getQuestionsExercice,
+    createExercice,
 };
