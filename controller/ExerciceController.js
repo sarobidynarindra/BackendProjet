@@ -2,6 +2,7 @@ const ClientsContributeursGuides = require('../model/ClientsContributeursGuides'
 const ContributeursGuides = require('../model/ContributeursGuides');
 const Exercices = require('../model/Exercices');
 const TypesExercices = require('../model/TypesExercices');
+const QuestionExercice = require('../model/QuestionExercice');
 const sequelize = require('../db');  
 const { QueryTypes } = require('sequelize');
 
@@ -134,6 +135,7 @@ const createExercice = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+
 module.exports = {
     getAllExerciceParFormation,
     getQuestionsExercice,
