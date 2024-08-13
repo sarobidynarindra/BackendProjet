@@ -7,6 +7,7 @@ const authRoutes = require('./routes/authRoutes');
 const formationClientRoutes = require('./routes/formationClientRoutes');
 const exercices = require('./routes/ExercicesRoutes');
 const planification = require('./routes/PlanificationRoutes');
+const typeExercice= require('./routes/TypesRoutes');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 
@@ -41,7 +42,7 @@ app.use(prefix + '/auth', authRoutes);
 app.use(prefix + '/getAllFormation', formationClientRoutes);
 app.use(prefix + '/Exercices', exercices);
 app.use(prefix + '/Planification', planification);
-
+app.use(prefix + '/TypeExercice', typeExercice);
 // Obligatoire si déploiement dans le cloud !
 const port = process.env.PORT || 10001;
 
